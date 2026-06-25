@@ -1,5 +1,11 @@
 "use client";
 import { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  "https://yqiyxvnytgddydzeoboo.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaXl4dm55dGdkZHlkemVvYm9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzOTU1MTYsImV4cCI6MjA5Nzk3MTUxNn0.2jJ6dH1Z3IJ16mtlZDHG8J33pypjDA34MU6nS1mL9Yg"
+);
 
 const services = [
   { icon: "🎁", title: "Gift Wrapping", desc: "Elegant wrapping using premium papers, ribbons, and finishing touches. From birthday boxes to wedding gifts — every detail matters.", price: "From UGX 15,000" },
@@ -19,19 +25,41 @@ const steps = [
 
 export default function Home() {
   const [form, setForm] = useState({ name: "", phone: "", occasion: "", service: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle"|"saving"|"done"|"error">("idle");
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setStatus("saving");
+
+    // 1. Save to Supabase
+    const { error } = await supabase.from("orders").insert([{
+      customer_name: form.name,
+      phone: form.phone,
+      occasion: form.occasion,
+      service: form.service,
+      message: form.message,
+      status: "new",
+    }]);
+
+    // 2. Also upsert customer record
+    if (!error) {
+      await supabase.from("customers").upsert(
+        [{ name: form.name, phone: form.phone }],
+        { onConflict: "phone", ignoreDuplicates: false }
+      );
+    }
+
+    // 3. Open WhatsApp with pre-filled message
     const text = encodeURIComponent(
       `Hi Wrap It Up! 🎁\n\nName: ${form.name}\nPhone: ${form.phone}\nOccasion: ${form.occasion}\nService: ${form.service}\nDetails: ${form.message}`
     );
-    window.open(`https://wa.me/256790084402?text=${text}`, "_blank");
-    setSent(true);
+    window.open(`https://wa.me/256700000000?text=${text}`, "_blank");
+
+    setStatus(error ? "error" : "done");
   }
 
   return (
@@ -41,13 +69,8 @@ export default function Home() {
       <section className="hero">
         <div className="hero-text">
           <p className="hero-eyebrow">Kampala&apos;s premium gift wrapping</p>
-          <h1 className="hero-title">
-            Every gift<br />deserves to be<br /><em>beautiful</em>
-          </h1>
-          <p className="hero-sub">
-            Professional gift wrapping, hamper curation, and delivery across Kampala.
-            Because the outside of a gift tells the story before the inside does.
-          </p>
+          <h1 className="hero-title">Every gift<br />deserves to be<br /><em>beautiful</em></h1>
+          <p className="hero-sub">Professional gift wrapping, hamper curation, and delivery across Kampala. Because the outside of a gift tells the story before the inside does.</p>
           <div className="hero-actions">
             <a href="#order" className="btn-primary">Order a wrap</a>
             <a href="#services" className="btn-outline">See services</a>
@@ -66,10 +89,6 @@ export default function Home() {
             <path d="M165 112 Q145 125 130 145" stroke="#C9A96E" strokeWidth="3" fill="none" strokeLinecap="round"/>
             <path d="M175 112 Q195 125 210 145" stroke="#C9A96E" strokeWidth="3" fill="none" strokeLinecap="round"/>
             <circle cx="170" cy="112" r="7" fill="#C9A96E"/>
-            <circle cx="95" cy="200" r="2" fill="#C9A96E" fillOpacity="0.4"/>
-            <circle cx="245" cy="220" r="2" fill="#C9A96E" fillOpacity="0.4"/>
-            <circle cx="110" cy="250" r="1.5" fill="#C9A96E" fillOpacity="0.3"/>
-            <circle cx="230" cy="260" r="1.5" fill="#C9A96E" fillOpacity="0.3"/>
           </svg>
         </div>
       </section>
@@ -103,25 +122,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GALLERY PREVIEW */}
+      {/* GALLERY */}
       <section className="section section-alt" id="gallery">
         <div className="section-header">
           <p className="section-eyebrow">Our work</p>
           <h2 className="section-title">The <em>gallery</em></h2>
-          <p style={{ marginTop: "1rem", color: "var(--text-muted)", fontSize: "14px" }}>
-            Add your photos to the <code>public/gallery/</code> folder to show them here.
-          </p>
         </div>
         <div className="gallery-grid">
-          <div className="gallery-item tall g1">
-            <div className="gallery-placeholder"><span className="gallery-label">Your best wrap photo</span></div>
-          </div>
+          <div className="gallery-item tall g1"><div className="gallery-placeholder"><span className="gallery-label">Your best wrap photo</span></div></div>
           <div className="gallery-item g2"><div className="gallery-placeholder"><span className="gallery-label">Photo</span></div></div>
           <div className="gallery-item g3"><div className="gallery-placeholder"><span className="gallery-label">Photo</span></div></div>
           <div className="gallery-item g4"><div className="gallery-placeholder"><span className="gallery-label">Photo</span></div></div>
           <div className="gallery-item g5"><div className="gallery-placeholder"><span className="gallery-label">Photo</span></div></div>
         </div>
-        <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
+        <div style={{ textAlign:"center", marginTop:"2.5rem" }}>
           <a href="/gallery" className="btn-outline">View full gallery</a>
         </div>
       </section>
@@ -146,10 +160,7 @@ export default function Home() {
       {/* TESTIMONIAL */}
       <div className="testimonial-section">
         <div className="gold-divider" />
-        <p className="testimonial-quote">
-          &ldquo;I sent my mum a birthday gift and cried when I saw the photos.
-          It was the most beautiful wrapping I had ever seen.&rdquo;
-        </p>
+        <p className="testimonial-quote">&ldquo;I sent my mum a birthday gift and cried when I saw the photos. It was the most beautiful wrapping I had ever seen.&rdquo;</p>
         <p className="testimonial-author">— Aisha M., Kampala</p>
       </div>
 
@@ -157,28 +168,25 @@ export default function Home() {
       <section className="order-section" id="order">
         <div className="order-inner">
           <div className="order-info">
-            <h2 className="order-tagline">
-              Ready to make<br />someone feel <em>special?</em>
-            </h2>
-            <p className="order-note">
-              Fill in the form and we&apos;ll open WhatsApp with your details pre-filled —
-              so we can get back to you within the hour.
-            </p>
+            <h2 className="order-tagline">Ready to make<br />someone feel <em>special?</em></h2>
+            <p className="order-note">Fill in the form and we&apos;ll save your order and open WhatsApp so we can confirm everything with you within the hour.</p>
             <div className="contact-details">
-              <div className="contact-item">📱 <span>+256790084402</span></div>
+              <div className="contact-item">📱 <span>+256 700 000 000</span></div>
               <div className="contact-item">✉️ <span>hello@wrapitup.ug</span></div>
               <div className="contact-item">📍 <span>Kampala, Uganda</span></div>
               <div className="contact-item">📸 <span>@wrapitup.ug</span></div>
             </div>
           </div>
 
-          {sent ? (
+          {status === "done" || status === "error" ? (
             <div className="sent-message">
-              <div className="sent-icon">🎁</div>
-              <h3>WhatsApp opened!</h3>
-              <p>Your order details are pre-filled. Just hit send and we&apos;ll get back to you shortly.</p>
-              <button className="form-submit" style={{ marginTop: "1.5rem" }} onClick={() => setSent(false)}>
-                Send another enquiry
+              <div className="sent-icon">{status === "done" ? "🎁" : "⚠️"}</div>
+              <h3>{status === "done" ? "Order received!" : "Something went wrong"}</h3>
+              <p>{status === "done"
+                ? "Your order is saved and WhatsApp is open. We\u2019ll confirm shortly!"
+                : "Please try again or WhatsApp us directly."}</p>
+              <button className="form-submit" style={{marginTop:"1.5rem"}} onClick={() => setStatus("idle")}>
+                {status === "done" ? "Place another order" : "Try again"}
               </button>
             </div>
           ) : (
@@ -219,7 +227,9 @@ export default function Home() {
                 <label className="form-label">Tell us more</label>
                 <textarea className="form-input" name="message" placeholder="Gift size, preferred colours, special requests..." value={form.message} onChange={handleChange} />
               </div>
-              <button type="submit" className="form-submit">Send enquiry via WhatsApp ✦</button>
+              <button type="submit" className="form-submit" disabled={status === "saving"}>
+                {status === "saving" ? "Saving..." : "Send enquiry via WhatsApp ✦"}
+              </button>
             </form>
           )}
         </div>
