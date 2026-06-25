@@ -27,7 +27,7 @@ export default function AboutPage() {
           <div className="about-text">
             <p className="section-eyebrow">How it started</p>
             <h2 className="section-title" style={{ textAlign: "left", fontSize: "36px", marginBottom: "1.5rem" }}>
-              Two sisters, one <em>beautiful idea</em>
+              Two Minds, one <em>beautiful idea</em>
             </h2>
             <p className="about-para">
               Wrap It Up was born from a simple belief — that the way a gift looks on the outside
