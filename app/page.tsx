@@ -57,7 +57,7 @@ export default function Home() {
     const text = encodeURIComponent(
       `Hi Wrap It Up! 🎁\n\nName: ${form.name}\nPhone: ${form.phone}\nOccasion: ${form.occasion}\nService: ${form.service}\nDetails: ${form.message}`
     );
-    window.open(`https://wa.me/256700000000?text=${text}`, "_blank");
+    window.open(`https://wa.me/25675016270?text=${text}`, "_blank");
 
     setStatus(error ? "error" : "done");
   }
