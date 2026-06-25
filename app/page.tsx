@@ -30,7 +30,7 @@ export default function Home() {
     const text = encodeURIComponent(
       `Hi Wrap It Up! 🎁\n\nName: ${form.name}\nPhone: ${form.phone}\nOccasion: ${form.occasion}\nService: ${form.service}\nDetails: ${form.message}`
     );
-    window.open(`https://wa.me/256700000000?text=${text}`, "_blank");
+    window.open(`https://wa.me/256790084402?text=${text}`, "_blank");
     setSent(true);
   }
 
@@ -165,7 +165,7 @@ export default function Home() {
               so we can get back to you within the hour.
             </p>
             <div className="contact-details">
-              <div className="contact-item">📱 <span>+256 700 000 000</span></div>
+              <div className="contact-item">📱 <span>+256790084402</span></div>
               <div className="contact-item">✉️ <span>hello@wrapitup.ug</span></div>
               <div className="contact-item">📍 <span>Kampala, Uganda</span></div>
               <div className="contact-item">📸 <span>@wrapitup.ug</span></div>

@@ -29,7 +29,7 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Connect</h4>
           <ul>
-            <li><a href="https://wa.me/256700000000" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="https://wa.me/256790084402" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
             <li><a href="https://instagram.com/wrapitup.ug" target="_blank" rel="noopener noreferrer">Instagram</a></li>
             <li><a href="https://tiktok.com/@wrapitup.ug" target="_blank" rel="noopener noreferrer">TikTok</a></li>
           </ul>

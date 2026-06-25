@@ -99,7 +99,7 @@ export default function ServicesPage() {
         <p style={{ color: "rgba(255,255,255,0.6)", margin: "1rem 0 2rem", fontSize: "14px", letterSpacing: "0.05em" }}>
           WhatsApp us and we&apos;ll help you figure it out in minutes.
         </p>
-        <a href="https://wa.me/256700000000" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ background: "#C9A96E" }}>
+        <a href="https://wa.me/256790084402" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ background: "#C9A96E" }}>
           Chat with us on WhatsApp
         </a>
       </div>
