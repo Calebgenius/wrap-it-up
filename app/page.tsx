@@ -57,7 +57,7 @@ export default function Home() {
     const text = encodeURIComponent(
       `Hi Wrap It Up! 🎁\n\nName: ${form.name}\nPhone: ${form.phone}\nOccasion: ${form.occasion}\nService: ${form.service}\nDetails: ${form.message}`
     );
-    window.open(`https://wa.me/25675016270?text=${text}`, "_blank");
+    window.open(`https://wa.me/256750016270?text=${text}`, "_blank");
 
     setStatus(error ? "error" : "done");
   }
@@ -171,7 +171,7 @@ export default function Home() {
             <h2 className="order-tagline">Ready to make<br />someone feel <em>special?</em></h2>
             <p className="order-note">Fill in the form and we&apos;ll save your order and open WhatsApp so we can confirm everything with you within the hour.</p>
             <div className="contact-details">
-              <div className="contact-item">📱 <span>+256 700 000 000</span></div>
+              <div className="contact-item">📱 <span>+256 750 016 270</span></div>
               <div className="contact-item">✉️ <span>hello@wrapitup.ug</span></div>
               <div className="contact-item">📍 <span>Kampala, Uganda</span></div>
               <div className="contact-item">📸 <span>@wrapitup.ug</span></div>
