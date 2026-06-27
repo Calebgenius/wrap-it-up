@@ -19,6 +19,7 @@ export default function Navbar() {
           <li><Link href="/gallery">Gallery</Link></li>
           <li><Link href="/#how-it-works">How it works</Link></li>
           <li><Link href="/about">About</Link></li>
+          <li><Link href="/corporate">Corporate</Link></li>
         </ul>
 
         <Link href="/#order" className="nav-cta">Order now</Link>
