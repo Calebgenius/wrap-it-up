@@ -10,7 +10,7 @@ export default function Navbar() {
     <>
       <nav className="nav">
         <Link href="/" className="nav-logo-img">
-          <Image src="/logo.png" alt="Wrap It Up" width={110} height={110} style={{objectFit:"contain"}} priority />
+          <Image src="/logo-transparent.png" alt="Wrap It Up" width={110} height={110} style={{objectFit:"contain"}} priority />
         </Link>
 
         <ul className="nav-links">

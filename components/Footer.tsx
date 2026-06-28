@@ -6,7 +6,7 @@ export default function Footer() {
     <>
       <footer className="footer">
         <div className="footer-brand">
-          <Image src="/logo.png" alt="Wrap It Up" width={140} height={140} style={{objectFit:"contain"}} />
+          <Image src="/logo-transparent.png" alt="Wrap It Up" width={140} height={140} style={{objectFit:"contain"}} />
           <p className="footer-tagline" style={{marginTop:"0.75rem"}}>Beautifully wrapped, thoughtfully given</p>
         </div>
         <div className="footer-col">

@@ -45,14 +45,14 @@ export default function AboutPage() {
               to make someone smile — we&apos;re here for it.
             </p>
           </div>
-          <div className="about-visual" style={{position:"relative", minHeight:"400px"}}>
-            <Image 
-              src="/sis.jpg" 
-              alt="Founder of Wrap It Up" 
-              fill
-              style={{objectFit:"cover"}}
-            />
-          </div>
+          <div className="about-visual" style={{position:"relative", minHeight:"500px", overflow:"hidden"}}>
+  <Image 
+    src="/sis.jpg" 
+    alt="Founder of Wrap It Up" 
+    fill
+    style={{objectFit:"cover", objectPosition:"center top"}}
+  />
+</div>
         </div>
       </section>
 
