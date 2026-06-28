@@ -37,6 +37,7 @@ export default function Navbar() {
             <li><Link href="/about">About</Link></li>
             <li><Link href="/corporate">Corporate</Link></li>
             <li><Link href="/track">Track order</Link></li>
+            <li><Link href="/school">School packages</Link></li>
             <li><Link href="/#order" className="drawer-cta">Order now</Link></li>
           </ul>
         </div>

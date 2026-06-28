@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import Image from "next/image";
 export const metadata: Metadata = {
   title: "About Us — Wrap It Up",
   description: "The story behind Wrap It Up, Kampala's premium gift wrapping service.",
@@ -45,13 +45,13 @@ export default function AboutPage() {
               to make someone smile — we&apos;re here for it.
             </p>
           </div>
-          <div className="about-visual">
-            <div className="about-img-placeholder">
-              <span style={{ fontSize: "64px" }}>🎀</span>
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "12px", letterSpacing: "0.15em", textTransform: "uppercase", marginTop: "1rem" }}>
-                Add a team photo here
-              </p>
-            </div>
+          <div className="about-visual" style={{position:"relative", minHeight:"400px"}}>
+            <Image 
+              src="/sis.jpg" 
+              alt="Founder of Wrap It Up" 
+              fill
+              style={{objectFit:"cover"}}
+            />
           </div>
         </div>
       </section>
